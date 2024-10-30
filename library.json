@@ -15,7 +15,7 @@
     ],
 
     "dependencies": {
-        "micro_rosso_platformio": "https://github.com/xopxe/micro_rosso_platformio.git#modularization"
+        "micro_rosso_platformio": "https://github.com/xopxe/micro_rosso_platformio.git"
       },
     "frameworks": "arduino",
     "platforms": "espressif32"
