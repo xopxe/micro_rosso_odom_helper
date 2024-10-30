@@ -15,7 +15,8 @@ typedef struct {
 class OdomHelper {
 public:
   OdomHelper();
-  static bool setup( const char* topic_odom = "/odom" );
+  static bool setup( const char* topic_odom = "/odom",
+                     timer_descriptor &timer_report = micro_rosso::timer_report );
   
   static void update_pos( float vx, float vy, float vphi, float dt);
   static void set( float x, float y, float phi, float vx, float vy, float vphi );

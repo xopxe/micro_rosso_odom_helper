@@ -106,7 +106,7 @@ static void report_cb(int64_t last_call_time) {
 }
 
 
-bool OdomHelper::setup(const char* topic_odom ) {
+bool OdomHelper::setup(const char* topic_odom, timer_descriptor &timer_report ) {
   D_print("setup: odom_helper... ");
 
   set(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -117,7 +117,7 @@ bool OdomHelper::setup(const char* topic_odom ) {
   pdescriptor_odom.topic_name = topic_odom;
   micro_rosso::publishers.push_back(&pdescriptor_odom);
 
-  micro_rosso::timer_report.callbacks.push_back(&report_cb);
+  timer_report.callbacks.push_back(&report_cb);
 
   D_println("done.");
   return true;
