@@ -1,0 +1,22 @@
+{
+    "name": "micro_rosso_odom_helper",
+    "version": "0.0.1",
+    "description": "Simple odometry module for micro_rosso",
+    "keywords": "ros, microros, robot",
+
+    "authors":
+    [
+      {
+        "name": "Jorge Visca",
+        "email": "jvisca@fing.edu.uy",
+        "url": "https://www.fing.edu.uy/~jvisca/",
+        "maintainer": true
+      }
+    ],
+
+    "dependencies": {
+        "micro_rosso_platformio": "https://github.com/xopxe/micro_rosso_platformio.git#modularization"
+      },
+    "frameworks": "arduino",
+    "platforms": "espressif32"
+}
