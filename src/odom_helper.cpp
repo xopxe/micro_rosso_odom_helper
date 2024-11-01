@@ -34,12 +34,6 @@ OdomHelper::OdomHelper()
   msg_odom.header.frame_id = micro_ros_string_utilities_set(msg_odom.header.frame_id, "odom");
   msg_odom.child_frame_id = micro_ros_string_utilities_set(msg_odom.child_frame_id, "base_footprint");
 
-  /*  msg_odom.twist.twist.linear.y = 0.0;
-    msg_odom.twist.twist.linear.z = 0.0;
-    msg_odom.twist.twist.angular.x = 0.0;
-    msg_odom.twist.twist.angular.y = 0.0;
-    msg_odom.pose.pose.position.z = 0.0; */
-
   // we don't change these anymore
   msg_odom.pose.covariance[0] = 0.0001;
   msg_odom.pose.covariance[7] = 0.0001;
@@ -50,19 +44,16 @@ OdomHelper::OdomHelper()
   msg_odom.twist.covariance[35] = 0.0001;
 }
 
-void OdomHelper::set(float x, float y, float phi, float vx, float vy, float vphi)
+void OdomHelper::set(float x, float y, float phi)
 {
   OdomHelper::pos.x = x;
   OdomHelper::pos.y = y;
   OdomHelper::pos.phi = phi;
-  OdomHelper::vel.x = vx;
-  OdomHelper::vel.y = vy;
-  OdomHelper::vel.phi = vphi;
 }
 
 void OdomHelper::reset()
 {
-  set(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+  set(0.0, 0.0, 0.0);
 }
 
 void OdomHelper::update_pos(float vx, float vy, float vphi, float dt)
@@ -112,8 +103,6 @@ static void report_cb(int64_t last_call_time)
 bool OdomHelper::setup(const char *topic_odom, timer_descriptor &timer_report)
 {
   D_print("setup: odom_helper... ");
-
-  set(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
   pdescriptor_odom.qos = QOS_DEFAULT;
   pdescriptor_odom.type_support = (rosidl_message_type_support_t *)
