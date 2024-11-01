@@ -6,7 +6,15 @@ It's a helper module for writing mobile robots. It performs dead reconning, inte
 
 ## Loading and starting
 
-In your main.cpp 
+First, import module into in your project's `platformio.ini`:
+
+```
+lib_deps =
+    ...
+    https://github.com/xopxe/micro_rosso_odom_helper.git
+```
+
+Then, in your `main.cpp`:
 
 ```
 ...
@@ -15,26 +23,35 @@ static OdomHelper odom;
 ...
 void setup() {
   ...
-  odm.setup() {
+  odom.setup() {
   ...
 }
 ```
 
-The setup method allows the passing of an optional topic name and a different timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
+The setup method allows passing an optional topic name and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
 
 ```
-  static bool setup(const char *topic_odom = "/odom", timer_descriptor &timer_report = micro_rosso::timer_report);
+static bool setup(const char *topic_odom = "/odom", timer_descriptor &timer_report = micro_rosso::timer_report);
 ```
 
-## Using
+## Using the module
 
-You must call `update_pos(float vx, float vy, float vphi, float dt);` periodically, passing the linear and angular velocities and the time step. You typically will do this from the motor control code, perhaps inside a control loop associated to the micro_rosso::timer_control timer.
+You must call `update_pos(float vx, float vy, float vphi, float dt);` periodically, passing the linear and angular velocities and the time step. You typically will do this from the motor control code, perhaps inside a control loop associated with the micro_rosso::timer_control timer.
 
-The integrated position is stored in the static member `static odom_t pos`. The last instantaneous velocity is in `static odom_t vel`.
+The resulting integrated position is stored in the static member `odom.pos`. The last instantaneous velocity is in `odom.vel`. Both are of the type `odom_t`:
 
-At any moment you can set an absolute position 
+```
+typedef struct
+{
+  float x;
+  float y;
+  float phi;
+} odom_t;
+```
 
-....
+You can set an absolute position at any moment using the `odom.set(x, y, phi)` method.
+
+The module emits a [nav_msgs/msg/odometry](https://docs.ros2.org/foxy/api/nav_msgs/msg/Odometry.html) topic.
 
 ## Authors and acknowledgment
 
