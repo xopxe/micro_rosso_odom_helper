@@ -2,11 +2,11 @@
 
 This a module for the [micro_rosso](https://github.com/xopxe/micro_rosso_platformio) system.
 
-It's a helper module for writing mobile robots. It performs dead reconning, integrates the movement of the robot, and publishes ROS /odom topics.
+It's a helper module for writing mobile robots. It performs dead reconning, integrates the robot's movement, and publishes ROS /odom topics.
 
 ## Loading and starting
 
-First, import module into in your project's `platformio.ini`:
+First, import the module into your project's `platformio.ini`:
 
 ```
 lib_deps =
@@ -23,7 +23,7 @@ static OdomHelper odom;
 ...
 void setup() {
   ...
-  odom.setup() {
+  odom.setup();
   ...
 }
 ```
