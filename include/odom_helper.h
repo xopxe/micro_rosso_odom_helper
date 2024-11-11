@@ -18,7 +18,7 @@ class OdomHelper
 public:
   OdomHelper();
   static bool setup(const char *topic_odom = "/odom",
-                    timer_descriptor &timer_report = micro_rosso::timer_report);
+                    timer_descriptor &timer = micro_rosso::timer_report);
 
   static void update_pos(float vx, float vy, float vphi, float dt);
 

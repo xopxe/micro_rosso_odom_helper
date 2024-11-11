@@ -8,7 +8,7 @@ It's a helper module for writing mobile robots. It performs dead reconning, inte
 
 First, import the module into your project's `platformio.ini`:
 
-```
+```ini
 lib_deps =
     ...
     https://github.com/xopxe/micro_rosso_odom_helper.git
@@ -16,7 +16,7 @@ lib_deps =
 
 Then, in your `main.cpp`:
 
-```
+```cpp
 ...
 #include "odom_helper.h"
 static OdomHelper odom;
@@ -30,8 +30,8 @@ void setup() {
 
 The setup method allows passing an optional topic name and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
 
-```
-static bool setup(const char *topic_odom = "/odom", timer_descriptor &timer_report = micro_rosso::timer_report);
+```h
+static bool setup(const char *topic_odom = "/odom", timer_descriptor &timer = micro_rosso::timer_report);
 ```
 
 ## Using the module
@@ -40,7 +40,7 @@ You must call `update_pos(float vx, float vy, float vphi, float dt);` periodical
 
 The resulting integrated position is stored in the static member `odom.pos`. The last instantaneous velocity is in `odom.vel`. Both are of the type `odom_t`:
 
-```
+```h
 typedef struct
 {
   float x;
@@ -60,5 +60,3 @@ jvisca@fing.edu.uy - [Grupo MINA](https://www.fing.edu.uy/inco/grupos/mina/), Fa
 ## License
 
 MIT
-
-
