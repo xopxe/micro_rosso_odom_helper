@@ -28,10 +28,12 @@ void setup() {
 }
 ```
 
-The setup method allows passing an optional topic name and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
+The setup method allows passing an optional topic name, the base frame to use, and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
 
 ```h
-static bool setup(const char *topic_odom = "/odom", timer_descriptor &timer = micro_rosso::timer_report);
+  static bool setup(const char *topic_odom = "/odom",
+                    const char *child_frame_id = "base_link",
+                    timer_descriptor &timer = micro_rosso::timer_report);
 ```
 
 ## Using the module
