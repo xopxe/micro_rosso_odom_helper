@@ -31,9 +31,6 @@ static void euler_to_quat(float roll, float pitch, float yaw, float *q)
 
 OdomHelper::OdomHelper()
 {
-  msg_odom.header.frame_id = micro_ros_string_utilities_set(msg_odom.header.frame_id, "odom");
-  msg_odom.child_frame_id = micro_ros_string_utilities_set(msg_odom.child_frame_id, "base_footprint");
-
   // we don't change these anymore
   msg_odom.pose.covariance[0] = 0.0001;
   msg_odom.pose.covariance[7] = 0.0001;
@@ -100,9 +97,14 @@ static void report_cb(int64_t last_call_time)
   */
 }
 
-bool OdomHelper::setup(const char *topic_odom, timer_descriptor &timer)
+bool OdomHelper::setup(const char *topic_odom,
+                       const char *child_frame_id,
+                       timer_descriptor &timer)
 {
   D_print("setup: odom_helper... ");
+
+  msg_odom.header.frame_id = micro_ros_string_utilities_set(msg_odom.header.frame_id, "odom");
+  msg_odom.child_frame_id = micro_ros_string_utilities_set(msg_odom.child_frame_id, child_frame_id);
 
   pdescriptor_odom.qos = QOS_DEFAULT;
   pdescriptor_odom.type_support = (rosidl_message_type_support_t *)
