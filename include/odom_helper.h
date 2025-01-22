@@ -18,6 +18,7 @@ class OdomHelper
 public:
   OdomHelper();
   static bool setup(const char *topic_odom = "/odom",
+                    const char *child_frame_id = "base_link",
                     timer_descriptor &timer = micro_rosso::timer_report);
 
   static void update_pos(float vx, float vy, float vphi, float dt);

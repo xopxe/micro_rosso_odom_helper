@@ -59,13 +59,21 @@ void OdomHelper::update_pos(float vx, float vy, float vphi, float dt)
   OdomHelper::vel.y = vy;
   OdomHelper::vel.phi = vphi;
 
-  OdomHelper::pos.x += vx * dt;
-  OdomHelper::pos.y += vy * dt;
   OdomHelper::pos.phi += vphi * dt;
+  float phi_y = OdomHelper::pos.phi + PI/2;
+
+  float dx = vx * dt;
+  float dy = vy * dt;
+
+  OdomHelper::pos.x += cos(OdomHelper::pos.phi) * dx;
+  OdomHelper::pos.y += sin(OdomHelper::pos.phi) * dx;
+  OdomHelper::pos.x += cos(phi_y) * dy;
+  OdomHelper::pos.y += sin(phi_y) * dy;
 }
 
 static void report_cb(int64_t last_call_time)
 {
+  micro_rosso::set_timestamp(msg_odom.header.stamp); // TODO replace with real timestamp
 
   // robot's position in x,y,phi
   msg_odom.pose.pose.position.x = OdomHelper::pos.x;
@@ -87,7 +95,6 @@ static void report_cb(int64_t last_call_time)
   msg_odom.twist.twist.linear.y = OdomHelper::vel.y;
   msg_odom.twist.twist.angular.z = OdomHelper::vel.phi;
 
-  micro_rosso::set_timestamp(msg_odom.header.stamp); // TODO replace with real timestamp
   RCNOCHECK(rcl_publish(&pdescriptor_odom.publisher, &msg_odom, NULL));
 
   /*
