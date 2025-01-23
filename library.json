@@ -1,6 +1,6 @@
 {
   "name": "micro_rosso_odom_helper",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Simple odometry module for micro_rosso",
   "keywords": "ros, micro-ros, robot, micro_rosso, odometry",
   "authors": [

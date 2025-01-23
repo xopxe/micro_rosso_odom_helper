@@ -2,7 +2,7 @@
 
 This a module for the [micro_rosso](https://github.com/xopxe/micro_rosso_platformio) system.
 
-It's a helper module for writing mobile robots. It performs dead reconning, integrates the robot's movement, and publishes ROS /odom topics.
+It's a helper module for writing mobile robots. It performs dead reconning, integrates the robot's movement, and publishes ROS `/odom` and `/tf` topics.
 
 ## Loading and starting
 
@@ -28,13 +28,24 @@ void setup() {
 }
 ```
 
-The setup method allows passing an optional topic name, the base frame to use, and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
+The setup method allows optionally passing a topic name, the base and child frames for the tf, and a different micro_rosso timer to change the publication rate (by default, it uses the 5Hz timer). It is declared as follows:
 
 ```h
   static bool setup(const char *topic_odom = "/odom",
+                    const char *frame_id = "odom",
                     const char *child_frame_id = "base_link",
                     timer_descriptor &timer = micro_rosso::timer_report);
 ```
+
+## Dependencies
+
+If building fails on missing tf2 headers, you must install them manually into your main project:
+
+1. Clone [this](https://github.com/ros2/geometry2.git) repository and check out the branch of interest (e.g. jazzy).
+
+1. Copy the `tf2_msgs` directory (make sure it has a package.xml inside) into an `extra_packages` directory in the root of your project.
+
+1. Delete the .pio directory and rebuild everything.
 
 ## Using the module
 
@@ -55,9 +66,13 @@ You can set an absolute position at any moment using the `odom.set(x, y, phi)` m
 
 The module emits a [nav_msgs/msg/odometry](https://docs.ros2.org/foxy/api/nav_msgs/msg/Odometry.html) topic.
 
+## TODO
+
+* Refine QoS for the tf publisher.
+
 ## Authors and acknowledgment
 
-jvisca@fing.edu.uy - [Grupo MINA](https://www.fing.edu.uy/inco/grupos/mina/), Facultad de Ingeniería - Udelar, 2024
+<jvisca@fing.edu.uy> - [Grupo MINA](https://www.fing.edu.uy/inco/grupos/mina/), Facultad de Ingeniería - Udelar, 2024
 
 ## License
 

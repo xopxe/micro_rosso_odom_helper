@@ -18,11 +18,11 @@ class OdomHelper
 public:
   OdomHelper();
   static bool setup(const char *topic_odom = "/odom",
+                    const char *frame_id = "odom",
                     const char *child_frame_id = "base_link",
                     timer_descriptor &timer = micro_rosso::timer_report);
-
+                    
   static void update_pos(float vx, float vy, float vphi, float dt);
-
   static void set(float x, float y, float phi);
   static void reset();
 
